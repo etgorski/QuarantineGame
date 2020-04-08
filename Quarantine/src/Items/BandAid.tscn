@@ -25,6 +25,8 @@ tracks/0/keys = {
 }
 
 [node name="BandAid" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
