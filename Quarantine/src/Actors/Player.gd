@@ -15,19 +15,19 @@ signal health_changed
 signal died
 
 
-func _on_BandAid_body_entered(_body):
-	if current_health != max_health:
-		current_health = current_health + 1
-		emit_signal("health_changed", current_health)
+func _on_CollisionDetector_area_entered(_area: Area2D):
+	if _area.name == "BandAid":
+		if current_health != max_health:
+			current_health = current_health + 1
+			emit_signal("health_changed", current_health)
+	else:
+		motion = calculate_stomp_velocity(motion, stomp_impulse)
 
 
-func _on_EnemyDetector_area_entered(_area: Area2D):
-	motion = calculate_stomp_velocity(motion, stomp_impulse)
-
-
-func _on_EnemyDetector_body_entered(_body: PhysicsBody2D):
-	motion = calculate_knock_back(motion, stomp_impulse)
-	take_damage()
+func _on_CollisionDetector_body_entered(_body: PhysicsBody2D):
+	if _body.name == "Enemy":
+		motion = calculate_knock_back(motion, stomp_impulse)
+		take_damage()
 
 
 func take_damage():
