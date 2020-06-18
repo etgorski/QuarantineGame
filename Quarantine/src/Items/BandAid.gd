@@ -9,7 +9,5 @@ func _ready():
 
 
 func _on_BandAid_body_entered(_body):
-	if _body.name == "Player":
+	if _body.name == "Player" and _body.current_health != _body.max_health :
 		queue_free()
-	else:
-		return
