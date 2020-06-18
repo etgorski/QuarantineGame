@@ -43,6 +43,11 @@ func take_damage():
 		queue_free()
 
 
+func _process(delta):
+	if Input.is_key_pressed(KEY_ESCAPE):
+		get_tree().quit()
+
+
 func _physics_process(delta):
 	var x_input = (Input.get_action_strength("move_right") -
 					Input.get_action_strength("move_left"))
