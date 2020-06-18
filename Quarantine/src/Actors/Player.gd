@@ -2,16 +2,16 @@ extends Actor
 
 onready var sprite = $player
 onready var animationPlayer = $AnimationPlayer
-onready var damageTimer = $DamageTimer
 
 export var stomp_impulse = 1000.0
 
 var acceleration = 512.0
 var max_health = 3
 var current_health = max_health
-var is_damaged = false
+var money = 0
 
 signal health_changed
+signal money_changed
 signal died
 
 
@@ -20,6 +20,10 @@ func _on_CollisionDetector_area_entered(_area: Area2D):
 		if current_health != max_health:
 			current_health = current_health + 1
 			emit_signal("health_changed", current_health)
+	elif _area.name == "Coin":
+		money+=1
+		print(money)
+		emit_signal("money_changed", money)
 	else:
 		motion = calculate_stomp_velocity(motion, stomp_impulse)
 
@@ -69,9 +73,6 @@ func _physics_process(delta):
 		if x_input == 0:
 			motion.x = lerp(motion.x, 0, AIR_RESISTANCE)
 	
-	if is_damaged:
-		animationPlayer.play("TakeDamage")
-	
 	motion = move_and_slide(motion, Vector2.UP)
 
 
@@ -88,3 +89,4 @@ func calculate_knock_back(motion: Vector2, impulse: float) -> Vector2:
 	else:
 		out.x = -impulse
 	return out
+

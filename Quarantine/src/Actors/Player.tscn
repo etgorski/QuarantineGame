@@ -75,7 +75,7 @@ extents = Vector2( 5, 7 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
-collision_mask = 13
+collision_mask = 5
 script = ExtResource( 2 )
 stomp_impulse = 128.0
 
@@ -109,8 +109,5 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector"]
 position = Vector2( 0, -7 )
 shape = SubResource( 6 )
-
-[node name="DamageTimer" type="Timer" parent="."]
-wait_time = 0.5
 [connection signal="area_entered" from="CollisionDetector" to="." method="_on_CollisionDetector_area_entered"]
 [connection signal="body_entered" from="CollisionDetector" to="." method="_on_CollisionDetector_body_entered"]

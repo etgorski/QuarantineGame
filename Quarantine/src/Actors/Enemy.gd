@@ -1,9 +1,11 @@
 extends Actor
 
 onready var animationPlayer = $AnimationPlayer
+onready var playerHealth = $"../Player"
 
 var acceleration = 300.0
 var bandaid_scene = preload("res://src/Items/BandAid.tscn")
+var coin_scene = preload("res://src/Items/Coin.tscn")
 
 signal death
 
@@ -13,9 +15,14 @@ func _ready() -> void:
 
 
 func _on_Enemy_death():
-	var bandaid = bandaid_scene.instance()
-	bandaid.set_position(global_position + bandaid.spawnOffset)
-	get_parent().call_deferred("add_child", bandaid)
+	if playerHealth.current_health != playerHealth.max_health:
+		var bandaid = bandaid_scene.instance()
+		bandaid.set_position(global_position + bandaid.spawnOffset)
+		get_parent().call_deferred("add_child", bandaid)
+	if playerHealth.current_health == playerHealth.max_health:
+		var coin = coin_scene.instance()
+		coin.set_position(global_position)
+		get_parent().call_deferred("add_child", coin)
 
 
 func _on_StompDetector_body_entered(_body: PhysicsBody2D):
